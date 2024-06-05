@@ -129,6 +129,31 @@ public class ServicoEnvioEmailTeste {
 }
 ```
 
+## Manipulando Retornos
+
+- Stub: constrir um objeto ou mock que vai retornar exatamente o que você quer, simular um comportamento.
+- Usando Matchers.
+
+```
+ @Test
+    void retornarTrueParaQualquerValorNaValidacaoDeSaldo() {
+        Mockito.doNothing().when(conta).validaSaldo(ArgumentMatchers.anyDouble()); <---------Matcher
+        conta.validaSaldo(3_500);
+    }
+
+
+@Test
+    void lancarExceptionQuandoChamarApiDosCorreios() {
+        //Mockito.when(apiDosCorreios.buscaDadosComBaseNoCep(anyString())).thenThrow(IllegalArgumentException.class);
+        Mockito.doThrow(IllegalArgumentException.class).when(apiDosCorreios).buscaDadosComBaseNoCep(ArgumentMatchers.anyString()); <---------Matcher
+
+        assertThrows(IllegalArgumentException.class, () -> cadastrarPessoa.cadastrarPessoa("Jhonny", "456456", LocalDate.now(), "1231232"));
+
+    }
+```
+
+
+
 
 
 

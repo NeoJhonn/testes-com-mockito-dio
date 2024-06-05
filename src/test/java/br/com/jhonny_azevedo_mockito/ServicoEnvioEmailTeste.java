@@ -23,6 +23,7 @@ public class ServicoEnvioEmailTeste {
 
         String enderecoEmail = "jonny.azevedo@teste.com.br";
         String mesagem = "Olá mundo teste mensagem";
+        // o email vai ser em formato de texto se for false
         boolean ehFormatoHtml = false;
 
         servico.enviaEmail(enderecoEmail, mesagem, ehFormatoHtml);
