@@ -131,7 +131,7 @@ public class ServicoEnvioEmailTeste {
 
 ## Manipulando Retornos
 
-- Stub: constrir um objeto ou mock que vai retornar exatamente o que você quer, simular um comportamento.
+- Stubbing(when, thenReturn, thenThrow): constrir um objeto ou mock que vai retornar exatamente o que você quer, simular um comportamento.
 - Usando Matchers.
 
 ```
@@ -151,6 +151,49 @@ public class ServicoEnvioEmailTeste {
 
     }
 ```
+
+## Mockando Métodos Estáticos
+
+- Mudar a dependência do Mockito no pom para inline, não funciona no Mockito Core:
+
+```
+<dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>4.4.0</version>
+      <scope>test</scope>
+</dependency>
+```
+
+- Exemplo:
+
+```
+@ExtendWith(MockitoExtension.class)
+public class GeradorDeNumerosTeste {
+
+    @Test
+    void testaGeracaoComTamanhoDefinido() {
+        List<Integer> numerosAleatorios = GeradorDeNumeros.gerarNumerosAleatorios(10);
+
+        MockedStatic<GeradorDeNumeros> mockedStatic = Mockito.mockStatic(GeradorDeNumeros.class);
+        // Usar uma lambda no wheh()
+        mockedStatic.when(() -> GeradorDeNumeros.gerarNumerosAleatorios(10)).thenReturn(numerosAleatorios);
+
+        Assertions.assertEquals(GeradorDeNumeros.gerarNumerosAleatorios(10), numerosAleatorios);
+
+        // Usar uma lambda no verify()
+        mockedStatic.verify(() -> GeradorDeNumeros.gerarNumerosAleatorios(10));
+    }
+}
+```
+
+### Para se aprofundar
+
+- BDDMockito: pesquisar sobre.
+- Integração com o Spring Boot.
+- Documentação: https://site.mockito.org/
+
+
 
 
 
